@@ -73,6 +73,46 @@ const faqs = [
   ["Há música portuguesa?", "Sim. A cena nacional está no centro do Pulso, do pop ao rap e da eletrónica à alternativa."],
 ];
 
+const CalEmbed = lazy(() => import("@calcom/embed-react"));
+
+function ScheduleModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => { if (event.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  return (
+    <div
+      className={`fixed inset-0 z-[60] flex items-center justify-center p-4 transition-opacity duration-200 ${open ? "opacity-100" : "pointer-events-none opacity-0"}`}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Agendar reunião"
+      aria-hidden={!open}
+    >
+      <div className="absolute inset-0 bg-overlay backdrop-blur-md" onClick={onClose} />
+      <div className={`relative flex h-[min(44rem,calc(100dvh-4rem))] w-full max-w-3xl flex-col overflow-hidden rounded-xl border border-border bg-card shadow-2xl transition-transform duration-200 ${open ? "scale-100" : "scale-95"}`}>
+        <div className="flex items-center justify-between border-b border-border px-5 py-3">
+          <p className="flex items-center gap-2 font-display text-sm font-bold"><CalendarDays className="size-4 text-primary" />Agendar reunião</p>
+          <Button variant="ghost" size="icon-sm" onClick={onClose} aria-label="Fechar"><X /></Button>
+        </div>
+        <div className="min-h-0 flex-1">
+          {open && (
+            <Suspense fallback={<div className="grid h-full place-items-center text-sm text-muted-foreground">A carregar o calendário…</div>}>
+              <CalEmbed
+                calLink="rodrigo-goncalves-ust63q"
+                config={{ theme: "dark" }}
+                style={{ width: "100%", height: "100%", overflow: "auto" }}
+              />
+            </Suspense>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Brand() {
   return (
     <a href="#inicio" className="flex items-center gap-3 font-display text-xl font-bold" aria-label="Pulso — início">

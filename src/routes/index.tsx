@@ -199,6 +199,7 @@ function Player({ playing, setPlaying, title }: { playing: boolean; setPlaying: 
 function Index() {
   const [playing, setPlaying] = useState(false);
   const [nowPlaying, setNowPlaying] = useState("Perto do Fogo");
+  const [schedulingOpen, setSchedulingOpen] = useState(false);
   const playTrack = (title: string) => { setNowPlaying(title); setPlaying(true); };
 
   return (

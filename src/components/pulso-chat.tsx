@@ -36,7 +36,7 @@ function ChatPanel({ initialMessages, close, open }: { initialMessages: UIMessag
   };
 
   return (
-    <section id="pulso-chat" role="dialog" aria-modal="false" aria-label="Ajuda Chat Pulso" className={`chat-panel fixed z-[61] flex-col overflow-hidden border border-chat-border bg-chat-surface/95 text-chat-foreground shadow-[var(--shadow-chat)] backdrop-blur-2xl ${open ? "flex" : "hidden"}`}>
+    <section id="pulso-chat" role="dialog" aria-modal="false" aria-label="PulsoAI" className={`chat-panel fixed z-[61] flex-col overflow-hidden border border-chat-border bg-chat-surface/95 text-chat-foreground shadow-[var(--shadow-chat)] backdrop-blur-2xl ${open ? "flex" : "hidden"}`}>
       <header className="flex h-16 shrink-0 items-center gap-3 border-b border-chat-border px-4">
         <span className="grid size-9 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground"><AudioLines className="size-4" /></span>
         <div className="min-w-0 flex-1"><h2 className="text-sm font-bold leading-5">PulsoAI</h2><p className="text-[11px] text-chat-muted">O teu espaço para descobrir música</p></div>

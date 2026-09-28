@@ -21,6 +21,7 @@ import {
   Volume2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PulsoChat } from "@/components/pulso-chat";
 import heroImage from "@/assets/music-hero.jpg";
 import cover1 from "@/assets/covers/cover-1.jpg";
 import cover2 from "@/assets/covers/cover-2.jpg";
@@ -198,6 +199,7 @@ function Index() {
         </div>
       </main>
       <Player playing={playing} setPlaying={setPlaying} title={nowPlaying} />
+      <PulsoChat />
     </div>
   );
 }

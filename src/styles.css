@@ -36,6 +36,14 @@
   --color-overlay: var(--overlay);
   --color-overlay-foreground: var(--overlay-foreground);
   --color-hero-muted: var(--hero-muted);
+  --color-chat-surface: var(--chat-surface);
+  --color-chat-foreground: var(--chat-foreground);
+  --color-chat-muted: var(--chat-muted);
+  --color-chat-border: var(--chat-border);
+  --color-chat-soft: var(--chat-soft);
+  --color-chat-input: var(--chat-input);
+  --color-chat-user: var(--chat-user);
+  --color-chat-user-foreground: var(--chat-user-foreground);
 }
 
 :root {
@@ -66,7 +74,30 @@
   --overlay: oklch(0.08 0.01 210 / 0.72);
   --overlay-foreground: oklch(0.99 0 0);
   --hero-muted: oklch(0.82 0.012 210);
+  --chat-surface: oklch(0.99 0.003 200);
+  --chat-foreground: oklch(0.18 0.012 210);
+  --chat-muted: oklch(0.48 0.012 210);
+  --chat-border: oklch(0.89 0.008 210);
+  --chat-soft: oklch(0.96 0.006 210);
+  --chat-input: oklch(0.985 0.003 210);
+  --chat-user: oklch(0.25 0.025 210);
+  --chat-user-foreground: oklch(0.98 0.003 210);
+  --shadow-chat: 0 18px 56px color-mix(in oklab, var(--background) 60%, transparent);
+  --shadow-chat-trigger: 0 8px 24px color-mix(in oklab, var(--primary) 25%, transparent);
 }
+
+.chat-panel {
+  right: 1rem;
+  bottom: 9rem;
+  width: min(23.5rem, calc(100vw - 2rem));
+  height: min(34rem, calc(100dvh - 11rem));
+  min-height: 16rem;
+  border-radius: .75rem;
+  animation: chat-appear 180ms ease-out both;
+}
+@keyframes chat-appear { from { opacity: 0; transform: translateY(.5rem); } to { opacity: 1; transform: translateY(0); } }
+@media (min-width: 768px) { .chat-panel { right: 1.5rem; } }
+@media (max-height: 440px) { .chat-panel { bottom: 5rem; height: calc(100dvh - 6rem); min-height: 0; } }
 
 @layer base {
   * { border-color: var(--color-border); }
@@ -175,5 +206,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .chat-panel { animation: none; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }

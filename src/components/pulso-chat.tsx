@@ -91,9 +91,9 @@ export function PulsoChat() {
 
   return <>
     {loaded && <ChatPanel initialMessages={initialMessages} close={() => setOpen(false)} open={open} />}
-    <Button type="button" className="fixed bottom-24 right-4 z-[62] h-11 gap-2.5 rounded-full bg-primary px-4 text-xs font-bold text-primary-foreground shadow-[var(--shadow-chat-trigger)] hover:bg-primary-hover md:right-6" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label={open ? "Fechar Ajuda Chat" : "Abrir Ajuda Chat"} aria-controls="pulso-chat">
+    <Button type="button" className="fixed bottom-24 right-4 z-[62] h-11 gap-2.5 rounded-full bg-primary px-4 text-xs font-bold text-primary-foreground shadow-[var(--shadow-chat-trigger)] hover:bg-primary-hover md:right-6" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label={open ? "Fechar PulsoAI" : "Abrir PulsoAI"} aria-controls="pulso-chat">
       {open ? <X className="size-4" /> : <MessageCircle className="size-4" />}
-      <span>AJUDA CHAT</span>
+      <span>PulsoAI</span>
     </Button>
   </>;
 }

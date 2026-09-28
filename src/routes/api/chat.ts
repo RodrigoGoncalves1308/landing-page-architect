@@ -4,13 +4,18 @@ import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { z } from "zod";
 import { createLovableAiGatewayRunIdFetch, getLovableAiGatewayRunId, withLovableAiGatewayRunIdHeader } from "@/lib/run-id.server";
 
+const partSchema = z.union([
+  z.object({ type: z.literal("text"), text: z.string().max(4000) }).passthrough(),
+  z.object({ type: z.literal("reasoning"), text: z.string().max(10000) }).passthrough(),
+  // AI SDK lifecycle/metadata parts (step-start, file, source-*, etc.) carry no
+  // user text; passthrough keeps extra fields so convertToModelMessages can use them.
+  z.object({ type: z.string() }).passthrough(),
+]);
+
 const messageSchema = z.object({
   id: z.string(),
   role: z.enum(["user", "assistant"]),
-  parts: z.array(z.union([
-    z.object({ type: z.literal("text"), text: z.string().max(4000) }),
-    z.object({ type: z.literal("reasoning"), text: z.string().max(10000) }),
-  ])).max(20),
+  parts: z.array(partSchema).max(30),
 }).passthrough();
 
 export const Route = createFileRoute("/api/chat")({

@@ -23,7 +23,7 @@ export const Route = createFileRoute("/api/chat")({
         try {
           const body = await request.json();
           const parsed = z.object({ messages: z.array(messageSchema).min(1).max(40) }).parse(body);
-          messages = parsed.messages as UIMessage[];
+          messages = body.messages as UIMessage[];
           if (messages.at(-1)?.role !== "user") throw new Error("Missing user message");
         } catch {
           return Response.json({ error: "Não foi possível ler a mensagem." }, { status: 400 });

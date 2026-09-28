@@ -36,7 +36,7 @@ function ChatPanel({ initialMessages, close }: { initialMessages: UIMessage[]; c
   };
 
   return (
-    <section role="dialog" aria-modal="false" aria-label="Ajuda Chat Pulso" className="chat-panel fixed z-[61] flex flex-col overflow-hidden border border-chat-border bg-chat-surface/95 text-chat-foreground shadow-[var(--shadow-chat)] backdrop-blur-2xl">
+    <section id="pulso-chat" role="dialog" aria-modal="false" aria-label="Ajuda Chat Pulso" className="chat-panel fixed z-[61] flex flex-col overflow-hidden border border-chat-border bg-chat-surface/95 text-chat-foreground shadow-[var(--shadow-chat)] backdrop-blur-2xl">
       <header className="flex h-16 shrink-0 items-center gap-3 border-b border-chat-border px-4">
         <span className="grid size-9 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground"><AudioLines className="size-4" /></span>
         <div className="min-w-0 flex-1"><h2 className="text-sm font-bold leading-5">Pulso · Ajuda Chat</h2><p className="text-[11px] text-chat-muted">O teu espaço para descobrir música</p></div>
@@ -69,7 +69,7 @@ function ChatPanel({ initialMessages, close }: { initialMessages: UIMessage[]; c
       <div className="shrink-0 border-t border-chat-border bg-chat-surface px-3 py-3">
         <PromptInput onSubmit={({ text }) => submit(text)} className="border-chat-border bg-chat-input text-chat-foreground shadow-none">
           <PromptInputTextarea ref={textareaRef} aria-label="Mensagem" placeholder="Pergunta-me sobre música…" className="min-h-12 max-h-28 text-sm placeholder:text-chat-muted" />
-          <PromptInputFooter className="justify-end pt-0"><PromptInputSubmit status={status} onStop={stop} disabled={!busy && status !== "error" && false} className="size-8 rounded-md bg-primary text-primary-foreground hover:bg-primary-hover" /></PromptInputFooter>
+          <PromptInputFooter className="justify-end pt-0"><PromptInputSubmit status={status} onStop={stop} className="size-8 rounded-md bg-primary text-primary-foreground hover:bg-primary-hover" /></PromptInputFooter>
         </PromptInput>
       </div>
     </section>

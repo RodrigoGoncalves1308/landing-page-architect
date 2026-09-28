@@ -207,7 +207,7 @@ function Index() {
       <main className="pb-24 lg:ml-60">
         <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-border/70 bg-background/90 px-5 backdrop-blur-xl md:px-8 lg:px-10">
           <div className="flex items-center gap-4 lg:block"><div className="lg:hidden"><Brand /></div><h1 className="hidden font-display text-3xl font-bold lg:block">Novidades</h1></div>
-          <div className="flex items-center gap-2"><Button variant="ghost" size="icon" aria-label="Pesquisar"><Search /></Button><Button variant="ghost" size="icon" aria-label="Perfil"><UserRound /></Button><Button variant="ghost" size="icon" className="lg:hidden" aria-label="Abrir menu"><Menu /></Button></div>
+          <div className="flex items-center gap-2"><Button variant="pill" size="sm" className="hidden sm:inline-flex" onClick={() => setSchedulingOpen(true)}><CalendarDays />Agendar reunião</Button><Button variant="ghost" size="icon" aria-label="Pesquisar"><Search /></Button><Button variant="ghost" size="icon" aria-label="Perfil"><UserRound /></Button><Button variant="ghost" size="icon" className="lg:hidden" aria-label="Abrir menu"><Menu /></Button></div>
         </header>
 
         <div className="space-y-14 px-5 py-7 md:px-8 lg:px-10">

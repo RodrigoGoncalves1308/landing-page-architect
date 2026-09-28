@@ -12,7 +12,7 @@ const HISTORY_KEY = "pulso-chat-history-v1";
 const suggestions = ["Recomenda-me música", "O que é o Pulso?", "Explorar artistas portugueses"];
 const welcome = "Olá! Sou o assistente do Pulso. Posso ajudar-te a descobrir música, explorar artistas e encontrar novas sonoridades. O que te apetece ouvir?";
 
-function ChatPanel({ initialMessages, close }: { initialMessages: UIMessage[]; close: () => void }) {
+function ChatPanel({ initialMessages, close, open }: { initialMessages: UIMessage[]; close: () => void; open: boolean }) {
   const transport = useMemo(() => new DefaultChatTransport({ api: "/api/chat" }), []);
   const { messages, sendMessage, status, error, stop } = useChat({
     id: "pulso-single-conversation",
@@ -26,7 +26,7 @@ function ChatPanel({ initialMessages, close }: { initialMessages: UIMessage[]; c
     try { localStorage.setItem(HISTORY_KEY, JSON.stringify(messages)); } catch { /* Private browsing may block storage. */ }
   }, [messages, status]);
 
-  useEffect(() => { textareaRef.current?.focus(); }, [status]);
+  useEffect(() => { if (open) textareaRef.current?.focus(); }, [status, open]);
 
   const submit = (text: string) => {
     const clean = text.trim();
@@ -36,7 +36,7 @@ function ChatPanel({ initialMessages, close }: { initialMessages: UIMessage[]; c
   };
 
   return (
-    <section id="pulso-chat" role="dialog" aria-modal="false" aria-label="Ajuda Chat Pulso" className="chat-panel fixed z-[61] flex flex-col overflow-hidden border border-chat-border bg-chat-surface/95 text-chat-foreground shadow-[var(--shadow-chat)] backdrop-blur-2xl">
+    <section id="pulso-chat" role="dialog" aria-modal="false" aria-label="Ajuda Chat Pulso" className={`chat-panel fixed z-[61] flex-col overflow-hidden border border-chat-border bg-chat-surface/95 text-chat-foreground shadow-[var(--shadow-chat)] backdrop-blur-2xl ${open ? "flex" : "hidden"}`}>
       <header className="flex h-16 shrink-0 items-center gap-3 border-b border-chat-border px-4">
         <span className="grid size-9 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground"><AudioLines className="size-4" /></span>
         <div className="min-w-0 flex-1"><h2 className="text-sm font-bold leading-5">Pulso · Ajuda Chat</h2><p className="text-[11px] text-chat-muted">O teu espaço para descobrir música</p></div>
@@ -90,7 +90,7 @@ export function PulsoChat() {
   }, []);
 
   return <>
-    {open && loaded && <ChatPanel initialMessages={initialMessages} close={() => setOpen(false)} />}
+    {loaded && <ChatPanel initialMessages={initialMessages} close={() => setOpen(false)} open={open} />}
     <Button type="button" className="fixed bottom-24 right-4 z-[62] h-11 gap-2.5 rounded-full bg-primary px-4 text-xs font-bold text-primary-foreground shadow-[var(--shadow-chat-trigger)] hover:bg-primary-hover md:right-6" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label={open ? "Fechar Ajuda Chat" : "Abrir Ajuda Chat"} aria-controls="pulso-chat">
       {open ? <X className="size-4" /> : <MessageCircle className="size-4" />}
       <span>AJUDA CHAT</span>

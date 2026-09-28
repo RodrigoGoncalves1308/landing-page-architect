@@ -243,6 +243,7 @@ function Index() {
       </main>
       <Player playing={playing} setPlaying={setPlaying} title={nowPlaying} />
       <PulsoChat />
+      <ScheduleModal open={schedulingOpen} onClose={() => setSchedulingOpen(false)} />
     </div>
   );
 }

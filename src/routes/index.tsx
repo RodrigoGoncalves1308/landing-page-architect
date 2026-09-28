@@ -20,6 +20,7 @@ import {
   Sparkles,
   UserRound,
   Volume2,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PulsoChat } from "@/components/pulso-chat";

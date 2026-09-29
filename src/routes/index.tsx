@@ -24,13 +24,13 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PulsoChat } from "@/components/pulso-chat";
-import heroImage from "@/assets/music-hero.jpg";
-import cover1 from "@/assets/covers/cover-1.jpg";
-import cover2 from "@/assets/covers/cover-2.jpg";
-import cover3 from "@/assets/covers/cover-3.jpg";
-import cover4 from "@/assets/covers/cover-4.jpg";
-import cover5 from "@/assets/covers/cover-5.jpg";
-import cover6 from "@/assets/covers/cover-6.jpg";
+
+const cover1 = "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/7a/02/38/7a0238c7-5888-46aa-72c7-8f4236a890de/196871619080.jpg/1000x1000bb.jpg";
+const cover2 = "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/1e/39/c2/1e39c29d-9129-991a-0b32-8fede26df26f/24UMGIM10342.rgb.jpg/1000x1000bb.jpg";
+const cover3 = "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/93/47/f1/9347f1dc-484a-8c58-0d8e-0df401e2c78b/196589584373.jpg/1000x1000bb.jpg";
+const cover4 = "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/c2/f7/6d/c2f76d94-b187-65d9-65bf-9b12178853f5/196589909015.jpg/1000x1000bb.jpg";
+const cover5 = "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/eb/fa/b3ebfa2e-8c04-f793-d4a1-53d385b8c197/886449544158.jpg/1000x1000bb.jpg";
+const cover6 = "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/17/48/02/17480291-f01b-7201-5351-92d6f8425f75/196871830508.jpg/1000x1000bb.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -47,23 +47,23 @@ export const Route = createFileRoute("/")({
 });
 
 const tracks = [
-  { title: "Entrelinhas", artist: "Mara", image: cover1 },
-  { title: "Sons de Lisboa", artist: "Seleção Pulso", image: cover2 },
-  { title: "Sem Atalhos", artist: "Duarte", image: cover3 },
-  { title: "Maré Cheia", artist: "Luz", image: cover4 },
-  { title: "Depois da Meia-Noite", artist: "Circuito", image: cover5 },
-  { title: "Perto do Fogo", artist: "Íris", image: cover6 },
-  { title: "Linha Azul", artist: "Norte", image: cover2 },
-  { title: "Devagar", artist: "Mara & Luz", image: cover4 },
+  { title: 'Tata', artist: 'Slow J', image: cover1 },
+  { title: 'Chamadas', artist: 'Ivandro', image: cover2 },
+  { title: 'Andorinhas', artist: 'Ana Moura', image: cover3 },
+  { title: 'hortelã', artist: 'MARO', image: cover4 },
+  { title: 'Esquinas', artist: 'Dino D Santiago', image: cover5 },
+  { title: 'Alô', artist: 'Dillaz', image: cover6 },
+  { title: 'Sem Ti', artist: 'Slow J', image: cover1 },
+  { title: 'Lua', artist: 'Ivandro', image: cover2 },
 ];
 
 const releases = [
-  { title: "Entrelinhas", artist: "Mara", image: cover1, tag: "Novo álbum" },
-  { title: "Sons de Lisboa", artist: "Seleção Pulso", image: cover2, tag: "Atualizada" },
-  { title: "Sem Atalhos", artist: "Duarte", image: cover3, tag: "Novo single" },
-  { title: "Maré Cheia", artist: "Luz", image: cover4, tag: "Em destaque" },
-  { title: "Depois da Meia-Noite", artist: "Circuito", image: cover5, tag: "Nova lista" },
-  { title: "Perto do Fogo", artist: "Íris", image: cover6, tag: "Novo álbum" },
+  { title: 'Afro Fado', artist: 'Slow J', image: cover1, tag: 'Novo álbum' },
+  { title: 'Trovador', artist: 'Ivandro', image: cover2, tag: 'Álbum de estreia' },
+  { title: 'Casa Guilhermina', artist: 'Ana Moura', image: cover3, tag: 'Novo álbum' },
+  { title: 'hortelã', artist: 'MARO', image: cover4, tag: 'Novo álbum' },
+  { title: 'BADIU', artist: 'Dino D Santiago', image: cover5, tag: 'Destaque' },
+  { title: 'O Próprio', artist: 'Dillaz', image: cover6, tag: 'Novo álbum' },
 ];
 
 const faqs = [
@@ -185,7 +185,7 @@ function Player({ playing, setPlaying, title }: { playing: boolean; setPlaying: 
   return (
     <footer className="fixed inset-x-0 bottom-0 z-50 h-20 border-t border-border bg-player/95 backdrop-blur-xl lg:left-60">
       <div className="grid h-full grid-cols-[1fr_auto] items-center gap-4 px-4 md:grid-cols-[1fr_1.2fr_1fr] md:px-8">
-        <div className="flex min-w-0 items-center gap-3"><img src={cover6} alt="Capa de Perto do Fogo" className="size-12 rounded-sm object-cover" /><div className="min-w-0"><p className="truncate text-sm font-semibold">{title}</p><p className="truncate text-xs text-muted-foreground">Íris · Seleção Pulso</p></div></div>
+        <div className="flex min-w-0 items-center gap-3"><img src={cover1} alt="Capa de Afro Fado" className="size-12 rounded-sm object-cover" /><div className="min-w-0"><p className="truncate text-sm font-semibold">{title}</p><p className="truncate text-xs text-muted-foreground">Slow J · Afro Fado</p></div></div>
         <div className="flex items-center justify-end gap-2 md:flex-col md:justify-center md:gap-1">
           <div className="flex items-center gap-2"><Button variant="ghost" size="icon" className="hidden size-8 md:inline-flex" aria-label="Faixa anterior"><SkipBack /></Button><Button size="icon" className="rounded-full" onClick={() => setPlaying(!playing)} aria-label={playing ? "Pausar" : "Reproduzir"}>{playing ? <Pause className="fill-current" /> : <Play className="fill-current" />}</Button><Button variant="ghost" size="icon" className="hidden size-8 md:inline-flex" aria-label="Faixa seguinte"><SkipForward /></Button></div>
           <div className="hidden w-full max-w-sm items-center gap-2 text-[9px] text-muted-foreground md:flex"><span>1:24</span><div className="h-1 flex-1 overflow-hidden rounded-full bg-muted"><div className="h-full w-2/5 bg-primary" /></div><span>3:38</span></div>
@@ -198,7 +198,7 @@ function Player({ playing, setPlaying, title }: { playing: boolean; setPlaying: 
 
 function Index() {
   const [playing, setPlaying] = useState(false);
-  const [nowPlaying, setNowPlaying] = useState("Perto do Fogo");
+  const [nowPlaying, setNowPlaying] = useState("Tata");
   const [schedulingOpen, setSchedulingOpen] = useState(false);
   const playTrack = (title: string) => { setNowPlaying(title); setPlaying(true); };
 
@@ -213,9 +213,9 @@ function Index() {
 
         <div className="space-y-14 px-5 py-7 md:px-8 lg:px-10">
           <section id="novidades" className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <FeatureCard large image={heroImage} eyebrow="Sessão Pulso" title="A música acontece antes de chegar aos tops." copy="Uma atuação íntima, gravada ao vivo e sem filtros." />
-            <FeatureCard image={cover5} eyebrow="História de capa" title="Depois da meia-noite" copy="Circuito guia-nos pela nova eletrónica portuguesa." />
-            <FeatureCard image={cover2} eyebrow="Seleção atualizada" title="Portugal em alta rotação" copy="As vozes que estão a mudar o som do país." />
+            <FeatureCard large image={cover1} eyebrow="Sessão Pulso" title="Slow J: A revolução do Afro Fado" copy="O artista que está a redefinir a sonoridade urbana portuguesa regressa com um álbum visual e sonoro impactante." />
+            <FeatureCard image={cover2} eyebrow="História de capa" title="Ivandro: Do R&B à Pop" copy="O percurso do Trovador que conquistou Portugal e o mundo lusófono com a sua voz única." />
+            <FeatureCard image={cover3} eyebrow="Seleção atualizada" title="Fado sem fronteiras" copy="Ana Moura lidera uma nova geração que mistura a tradição do fado com eletrónica contemporânea." />
           </section>
 
           <section id="para-ti">

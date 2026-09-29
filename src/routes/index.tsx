@@ -25,12 +25,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { PulsoChat } from "@/components/pulso-chat";
 import heroImage from "@/assets/music-hero.jpg";
-import cover1 from "@/assets/covers/cover-1.jpg";
-import cover2 from "@/assets/covers/cover-2.jpg";
-import cover3 from "@/assets/covers/cover-3.jpg";
-import cover4 from "@/assets/covers/cover-4.jpg";
-import cover5 from "@/assets/covers/cover-5.jpg";
-import cover6 from "@/assets/covers/cover-6.jpg";
+const cover1 = "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/7a/02/38/7a0238c7-5888-46aa-72c7-8f4236a890de/196871619080.jpg/1000x1000bb.jpg";
+const cover2 = "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/1e/39/c2/1e39c29d-9129-991a-0b32-8fede26df26f/24UMGIM10342.rgb.jpg/1000x1000bb.jpg";
+const cover3 = "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/93/47/f1/9347f1dc-484a-8c58-0d8e-0df401e2c78b/196589584373.jpg/1000x1000bb.jpg";
+const cover4 = "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/c2/f7/6d/c2f76d94-b187-65d9-65bf-9b12178853f5/196589909015.jpg/1000x1000bb.jpg";
+const cover5 = "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/eb/fa/b3ebfa2e-8c04-f793-d4a1-53d385b8c197/886449544158.jpg/1000x1000bb.jpg";
+const cover6 = "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/17/48/02/17480291-f01b-7201-5351-92d6f8425f75/196871830508.jpg/1000x1000bb.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({

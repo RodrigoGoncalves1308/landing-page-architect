@@ -47,8 +47,10 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const firstTrack: Track = { title: "Manel", artist: "Bárbara Bandeira", image: barbaraCover.url, release: "Lusa: ato II", tag: "Pop português" };
+
 const tracks: Track[] = [
-  { title: "Manel", artist: "Bárbara Bandeira", image: barbaraCover.url, release: "Lusa: ato II", tag: "Pop português" },
+  firstTrack,
   { title: "Tata", artist: "Slow J", image: slowJCover.url, release: "Afro Fado", tag: "Hip-hop" },
   { title: "Bênção", artist: "Mizzy Miles, Van Zee & Bispo", image: bispoCover.url, release: "Bênção — Single", tag: "Rap português" },
   { title: "os croquetes acabam", artist: "Nena", image: nenaCover.url, release: "os croquetes acabam — Single", tag: "Pop português" },
@@ -190,7 +192,7 @@ function Player({ playing, setPlaying, track }: { playing: boolean; setPlaying: 
 
 function Index() {
   const [playing, setPlaying] = useState(false);
-  const [nowPlaying, setNowPlaying] = useState<Track>(tracks[0]);
+  const [nowPlaying, setNowPlaying] = useState<Track>(firstTrack);
   const [schedulingOpen, setSchedulingOpen] = useState(false);
   const playTrack = (track: Track) => { setNowPlaying(track); setPlaying(true); };
 

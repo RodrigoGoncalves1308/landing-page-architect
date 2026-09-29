@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PulsoChat } from "@/components/pulso-chat";
-import heroImage from "@/assets/music-hero.jpg";
+
 const cover1 = "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/7a/02/38/7a0238c7-5888-46aa-72c7-8f4236a890de/196871619080.jpg/1000x1000bb.jpg";
 const cover2 = "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/1e/39/c2/1e39c29d-9129-991a-0b32-8fede26df26f/24UMGIM10342.rgb.jpg/1000x1000bb.jpg";
 const cover3 = "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/93/47/f1/9347f1dc-484a-8c58-0d8e-0df401e2c78b/196589584373.jpg/1000x1000bb.jpg";

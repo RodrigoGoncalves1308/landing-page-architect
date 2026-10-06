@@ -1,6 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeader } from "@tanstack/react-start/server";
-import { createRemoteJWKSet, jwtVerify } from "jose";
 import { z } from "zod";
 import { createDoc, getDoc, getServiceAccount, listDocs, updateDoc, FirestoreNotConfigured } from "./firestore.server";
 import {
@@ -63,25 +62,12 @@ export const getFirebaseWebConfig = createServerFn({ method: "GET" }).handler(as
   return { apiKey, authDomain: `${sa.project_id}.firebaseapp.com`, projectId: sa.project_id };
 });
 
-/* ---------- admin ---------- */
-const JWKS = createRemoteJWKSet(new URL("https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com"));
-
-async function requireAdmin(idToken: string) {
-  const sa = getServiceAccount();
-  if (!sa) throw new Error("FIREBASE_SERVICE_ACCOUNT não configurado.");
-  let uid: string;
-  try {
-    const { payload } = await jwtVerify(idToken, JWKS, { issuer: `https://securetoken.google.com/${sa.project_id}`, audience: sa.project_id });
-    uid = String(payload.sub);
-  } catch {
-    throw new Error("Sessão inválida. Inicie sessão novamente.");
-  }
-  const admin = process.env["ADMIN_UID"]?.trim();
-  if (!admin || uid !== admin) throw new Error(`NAO_AUTORIZADO:${uid}`);
-  return uid;
+/* ---------- admin (open access by owner's choice; reads/writes use the service account) ---------- */
+async function requireAdmin(_idToken?: string) {
+  if (!getServiceAccount()) throw new Error("FIREBASE_SERVICE_ACCOUNT não configurado.");
 }
 
-const auth = z.object({ idToken: z.string().min(20).max(5000) });
+const auth = z.object({ idToken: z.string().max(5000).optional() });
 
 export const adminOverview = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => auth.parse(d))

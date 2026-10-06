@@ -34,65 +34,36 @@ type Overview = Awaited<ReturnType<typeof adminOverview>>;
 type PedidoRow = Overview["pedidos"][number];
 
 function AdminPage() {
-  const getConfig = useServerFn(getFirebaseWebConfig);
   const overviewFn = useServerFn(adminOverview);
-  const [auth, setAuth] = useState<Auth | null>(null);
-  const [user, setUser] = useState<User | null | undefined>(undefined);
-  const [configMissing, setConfigMissing] = useState(false);
   const [data, setData] = useState<Overview | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [unauthUid, setUnauthUid] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<"pedidos" | "catalogo">("pedidos");
 
-  useEffect(() => {
-    let unsub = () => {};
-    getConfig().then(async (cfg) => {
-      if (!cfg) { setConfigMissing(true); setUser(null); return; }
-      const a = await getFirebaseAuth(cfg);
-      const { getRedirectResult, onAuthStateChanged } = await import("firebase/auth");
-      setAuth(a);
-      try { await getRedirectResult(a); } catch { setError("O login Google falhou ou foi cancelado."); }
-      unsub = onAuthStateChanged(a, setUser);
-    }).catch(() => setError("Não foi possível carregar a configuração do Firebase."));
-    return () => unsub();
-  }, [getConfig]);
-
-  const token = useCallback(async () => { if (!user) throw new Error("Sem sessão."); return user.getIdToken(); }, [user]);
+  const token = useCallback(async () => "", []);
 
   const load = useCallback(async () => {
-    if (!user) return;
     setError(null);
     try {
-      setData(await overviewFn({ data: { idToken: await token() } }));
-      setUnauthUid(null);
+      setData(await overviewFn({ data: {} }));
     } catch (e) {
-      const msg = e instanceof Error ? e.message : String(e);
-      if (msg.startsWith("NAO_AUTORIZADO:")) setUnauthUid(msg.split(":")[1] ?? null);
-      else setError(msg);
+      setError(e instanceof Error ? e.message : String(e));
+    } finally {
+      setLoading(false);
     }
-  }, [user, overviewFn, token]);
+  }, [overviewFn]);
 
   useEffect(() => { void load(); }, [load]);
-
-  const login = async () => {
-    if (!auth) return;
-    const { GoogleAuthProvider, signInWithRedirect } = await import("firebase/auth");
-    try { await signInWithRedirect(auth, new GoogleAuthProvider()); } catch { setError("O login Google falhou ou foi cancelado."); }
-  };
-  const logout = async () => { if (auth) { const { signOut } = await import("firebase/auth"); await signOut(auth); setData(null); setUnauthUid(null); } };
 
   return (
     <div className="min-h-screen bg-background px-4 py-6 text-foreground md:px-8">
       <header className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <Link to="/" className="flex items-center gap-3 font-display text-xl font-bold"><span className="brand-mark"><AudioLines className="size-4" /></span>PULSO · Admin</Link>
-        {user && <div className="flex items-center gap-2"><Button variant="ghost" size="sm" onClick={load}><RefreshCw />Atualizar</Button><Button variant="pill" size="sm" onClick={logout}><LogOut />Sair</Button></div>}
+        <Button variant="ghost" size="sm" onClick={load}><RefreshCw />Atualizar</Button>
       </header>
       <p className="mb-6 rounded-md border border-border bg-card px-4 py-3 text-sm">Modo de aula: as notificações são enviadas apenas para o email do aluno. Os clientes não recebem emails.</p>
       {error && <p className="mb-4 text-sm text-destructive" role="alert">{error}</p>}
-      {configMissing && <p className="text-sm text-muted-foreground">O Firebase ainda não está configurado (FIREBASE_SERVICE_ACCOUNT e FIREBASE_WEB_API_KEY).</p>}
-      {user === undefined && !configMissing && <p className="text-sm text-muted-foreground">A carregar…</p>}
-      {user === null && !configMissing && <Button onClick={login}>Iniciar sessão com Google</Button>}
-      {unauthUid && <div className="rounded-md border border-border bg-card p-5 text-sm"><p className="font-semibold">Acesso não autorizado.</p><p className="mt-1 text-muted-foreground">Esta conta não é administradora. Se for a sua conta de aluno, configure ADMIN_UID com este UID:</p><code className="mt-2 block break-all rounded bg-muted p-2">{unauthUid}</code></div>}
+      {loading && <p className="text-sm text-muted-foreground">A carregar…</p>}
       {data && (
         <>
           {data.emFalta.length > 0 && <p className="mb-4 rounded-md border border-destructive/50 px-4 py-3 text-sm">Configuração em falta para a notificação ao aluno: {data.emFalta.join(", ")}.</p>}

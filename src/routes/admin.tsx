@@ -49,8 +49,9 @@ function AdminPage() {
     getConfig().then(async (cfg) => {
       if (!cfg) { setConfigMissing(true); setUser(null); return; }
       const a = await getFirebaseAuth(cfg);
-      const { onAuthStateChanged } = await import("firebase/auth");
+      const { getRedirectResult, onAuthStateChanged } = await import("firebase/auth");
       setAuth(a);
+      try { await getRedirectResult(a); } catch { setError("O login Google falhou ou foi cancelado."); }
       unsub = onAuthStateChanged(a, setUser);
     }).catch(() => setError("Não foi possível carregar a configuração do Firebase."));
     return () => unsub();
@@ -75,8 +76,8 @@ function AdminPage() {
 
   const login = async () => {
     if (!auth) return;
-    const { GoogleAuthProvider, signInWithPopup } = await import("firebase/auth");
-    try { await signInWithPopup(auth, new GoogleAuthProvider()); } catch { setError("O login Google falhou ou foi cancelado."); }
+    const { GoogleAuthProvider, signInWithRedirect } = await import("firebase/auth");
+    try { await signInWithRedirect(auth, new GoogleAuthProvider()); } catch { setError("O login Google falhou ou foi cancelado."); }
   };
   const logout = async () => { if (auth) { const { signOut } = await import("firebase/auth"); await signOut(auth); setData(null); setUnauthUid(null); } };
 

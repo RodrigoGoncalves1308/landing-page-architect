@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PulsoChat } from "@/components/pulso-chat";
+import { ProposalRequestForm } from "@/components/proposal-request-form";
 import barbaraCover from "@/assets/real-covers/barbara-bandeira-manel.asset.json";
 import bispoCover from "@/assets/real-covers/bispo-bencao.asset.json";
 import capitaoFaustoCover from "@/assets/real-covers/capitao-fausto-na-na-nada.asset.json";
@@ -228,6 +229,8 @@ function Index() {
             <div><p className="section-kicker">Em direto · Lisboa</p><h2 className="mt-2 font-display text-3xl font-bold">Pulso 24</h2><p className="mt-2 max-w-lg text-sm leading-6 text-muted-foreground">Conversas, estreias e música escolhida por pessoas que vivem a cultura todos os dias.</p></div>
             <Button size="lg" onClick={() => setPlaying(true)}><Radio />Ouvir em direto</Button>
           </section>
+
+          <ProposalRequestForm />
 
           <section id="faq" className="mx-auto max-w-4xl pb-8">
             <div className="section-title"><h2>Sobre o Pulso</h2></div>

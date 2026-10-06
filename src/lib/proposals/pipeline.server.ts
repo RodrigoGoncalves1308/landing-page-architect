@@ -109,19 +109,29 @@ export async function interpretarComGemini(texto: string, catalogo: CatalogoItem
   if (!key) throw new Error("GEMINI_API_KEY não configurada.");
   const model = process.env["GEMINI_MODEL"] || "gemini-2.5-flash";
   const cat = catalogo.filter((c) => c.ativo).map((c) => ({ id: c.id, nome: c.nome, descricao: c.descricao, unidade: c.unidade, condicoes: c.condicoes }));
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
-    method: "POST",
-    headers: { "content-type": "application/json", "x-goog-api-key": key },
-    body: JSON.stringify({
-      systemInstruction: { parts: [{ text: SYSTEM }] },
-      contents: [{ role: "user", parts: [{ text: `Catálogo ativo (JSON):\n${JSON.stringify(cat)}\n\n<pedido>\n${texto}\n</pedido>` }] }],
-      generationConfig: { responseMimeType: "application/json", responseSchema, temperature: 0 },
-    }),
+  const payload = JSON.stringify({
+    systemInstruction: { parts: [{ text: SYSTEM }] },
+    contents: [{ role: "user", parts: [{ text: `Catálogo ativo (JSON):\n${JSON.stringify(cat)}\n\n<pedido>\n${texto}\n</pedido>` }] }],
+    generationConfig: { responseMimeType: "application/json", responseSchema, temperature: 0 },
   });
+  const MAX_TENTATIVAS = 3;
+  let res!: Response;
+  for (let tentativa = 1; tentativa <= MAX_TENTATIVAS; tentativa++) {
+    res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-goog-api-key": key },
+      body: payload,
+    });
+    if (res.status !== 503 || tentativa === MAX_TENTATIVAS) break;
+    console.warn(`Gemini 503 (tentativa ${tentativa}/${MAX_TENTATIVAS}); nova tentativa em 1s.`);
+    await res.body?.cancel().catch(() => {});
+    await new Promise((r) => setTimeout(r, 1000));
+  }
   if (!res.ok) {
     const body = await res.text();
     console.error(`Gemini falhou [${res.status}]: ${body.slice(0, 300)}`);
     if (res.status === 429) throw new Error("Limite da API Gemini atingido (429). Tente novamente mais tarde.");
+    if (res.status === 503) throw new Error(`A API Gemini está sobrecarregada (503) após ${MAX_TENTATIVAS} tentativas.`);
     throw new Error(`A API Gemini devolveu erro ${res.status}.`);
   }
   const json = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };

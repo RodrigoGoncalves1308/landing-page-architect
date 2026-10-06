@@ -18,8 +18,8 @@ describe("calcularProposta", () => {
   });
   it("copia preços para a proposta (alterações posteriores não a afetam)", () => {
     const r = calcularProposta([{ catalogoId: "artigo-editorial", quantidade: 2 }], cat);
-    cat[3].precoUnitarioCentimos = 1;
-    expect(r.ok && r.linhas[0].precoUnitarioCentimos).toBe(18000);
+    cat[3]!.precoUnitarioCentimos = 1;
+    expect(r.ok && r.linhas[0]!.precoUnitarioCentimos).toBe(18000);
   });
 });
 

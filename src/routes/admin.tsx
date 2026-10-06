@@ -66,7 +66,7 @@ function AdminPage() {
       setUnauthUid(null);
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
-      if (msg.startsWith("NAO_AUTORIZADO:")) setUnauthUid(msg.split(":")[1]);
+      if (msg.startsWith("NAO_AUTORIZADO:")) setUnauthUid(msg.split(":")[1] ?? null);
       else setError(msg);
     }
   }, [user, overviewFn, token]);
@@ -141,7 +141,7 @@ function Pedidos({ data, token, reload }: { data: Overview; token: () => Promise
   );
 }
 
-function Detalhe({ pedido, proposta, catalogo, token, reload }: { pedido: PedidoRow; proposta?: Overview["propostas"][number]; catalogo: CatalogoItem[]; token: () => Promise<string>; reload: () => Promise<void> }) {
+function Detalhe({ pedido, proposta, catalogo, token, reload }: { pedido: PedidoRow; proposta?: Overview["propostas"][number] | undefined; catalogo: CatalogoItem[]; token: () => Promise<string>; reload: () => Promise<void> }) {
   const reprocess = useServerFn(adminReprocessar);
   const preview = useServerFn(adminPreview);
   const aprovar = useServerFn(adminAprovar);

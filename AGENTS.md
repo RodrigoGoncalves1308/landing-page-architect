@@ -10,5 +10,5 @@
 <!-- LOVABLE:END -->
 
 - Keep the Pulso assistant's single conversation in browser storage and stream its replies through the TanStack `/api/chat` server route; this preserves browser-only history while keeping AI credentials private.
-- Proposal requests use Firebase (Firestore via REST + service account, Firebase Auth ID tokens verified with jose) from TanStack server functions, never Supabase; firebase-admin is not Worker-compatible and the exercise forbids Supabase.
+- Proposal requests use Firebase (Firestore via REST + service account) from TanStack server functions, never Supabase; /admin is intentionally open (no login) by owner decision; firebase-admin is not Worker-compatible.
 - AI only interprets requests; prices come from the Firestore catalogue and totals are computed in `src/lib/proposals/shared.ts`, so the model can never set a price.

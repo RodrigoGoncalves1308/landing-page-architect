@@ -1,14 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { Auth, User } from "firebase/auth";
-import { AudioLines, ExternalLink, LogOut, RefreshCw } from "lucide-react";
+import { AudioLines, ExternalLink, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { getFirebaseAuth } from "@/lib/firebase-client";
 import {
-  adminAprovar, adminGuardarCatalogo, adminNotificar, adminOverview, adminPreview, adminReprocessar, getFirebaseWebConfig,
+  adminAprovar, adminGuardarCatalogo, adminNotificar, adminOverview, adminPreview, adminReprocessar,
 } from "@/lib/proposals/proposals.functions";
 import {
   ESTADO_NOTIFICACAO_LABEL, ESTADO_PEDIDO_LABEL, formatDataHora, formatEur, UNIDADE_LABEL,

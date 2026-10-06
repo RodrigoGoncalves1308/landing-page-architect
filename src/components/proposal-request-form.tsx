@@ -70,10 +70,10 @@ export function ProposalRequestForm() {
         <form onSubmit={onSubmit} noValidate className="grid w-full max-w-2xl gap-4">
           <input ref={honeypot} type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="grid gap-1.5"><Label htmlFor="proposta-nome">Nome</Label><Input {...field("nome")} maxLength={120} autoComplete="name" required />{errors.nome && <p className="text-xs text-destructive">{errors.nome}</p>}</div>
-            <div className="grid gap-1.5"><Label htmlFor="proposta-email">Email</Label><Input {...field("email")} type="email" maxLength={200} autoComplete="email" required />{errors.email && <p className="text-xs text-destructive">{errors.email}</p>}</div>
+            <div className="grid gap-1.5"><Label htmlFor="proposta-nome">Nome</Label><Input {...field("nome")} maxLength={120} autoComplete="name" required />{errors["nome"] && <p className="text-xs text-destructive">{errors["nome"]}</p>}</div>
+            <div className="grid gap-1.5"><Label htmlFor="proposta-email">Email</Label><Input {...field("email")} type="email" maxLength={200} autoComplete="email" required />{errors["email"] && <p className="text-xs text-destructive">{errors["email"]}</p>}</div>
           </div>
-          <div className="grid gap-1.5"><Label htmlFor="proposta-pedido">Pedido</Label><Textarea {...field("pedido")} rows={5} maxLength={3000} required placeholder="Ex.: Preciso de uma playlist editorial para o lançamento da nossa loja em Lisboa e de 2 horas de consultoria de curadoria musical." />{errors.pedido && <p className="text-xs text-destructive">{errors.pedido}</p>}</div>
+          <div className="grid gap-1.5"><Label htmlFor="proposta-pedido">Pedido</Label><Textarea {...field("pedido")} rows={5} maxLength={3000} required placeholder="Ex.: Preciso de uma playlist editorial para o lançamento da nossa loja em Lisboa e de 2 horas de consultoria de curadoria musical." />{errors["pedido"] && <p className="text-xs text-destructive">{errors["pedido"]}</p>}</div>
           {formError && <p className="text-sm text-destructive" role="alert">{formError}</p>}
           <div className="flex flex-wrap items-center gap-4">
             <Button type="submit" size="lg" disabled={status === "sending"}><Send />{status === "sending" ? "A enviar…" : "Pedir proposta"}</Button>

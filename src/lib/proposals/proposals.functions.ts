@@ -58,7 +58,7 @@ export const getPropostaPublica = createServerFn({ method: "POST" })
 
 export const getFirebaseWebConfig = createServerFn({ method: "GET" }).handler(async () => {
   const sa = getServiceAccount();
-  const apiKey = process.env.FIREBASE_WEB_API_KEY;
+  const apiKey = process.env["FIREBASE_WEB_API_KEY"];
   if (!sa || !apiKey) return null;
   return { apiKey, authDomain: `${sa.project_id}.firebaseapp.com`, projectId: sa.project_id };
 });
@@ -76,7 +76,7 @@ async function requireAdmin(idToken: string) {
   } catch {
     throw new Error("Sessão inválida. Inicie sessão novamente.");
   }
-  const admin = process.env.ADMIN_UID?.trim();
+  const admin = process.env["ADMIN_UID"]?.trim();
   if (!admin || uid !== admin) throw new Error(`NAO_AUTORIZADO:${uid}`);
   return uid;
 }

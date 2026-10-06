@@ -4,7 +4,7 @@ import { SignJWT, importPKCS8 } from "jose";
 type ServiceAccount = { project_id: string; client_email: string; private_key: string };
 
 export function getServiceAccount(): ServiceAccount | null {
-  const raw = process.env.FIREBASE_SERVICE_ACCOUNT;
+  const raw = process.env["FIREBASE_SERVICE_ACCOUNT"];
   if (!raw) return null;
   try {
     const sa = JSON.parse(raw) as ServiceAccount;
@@ -55,13 +55,13 @@ const encFields = (o: Record<string, unknown>) =>
 
 function dec(v: FsValue): unknown {
   if ("nullValue" in v) return null;
-  if ("booleanValue" in v) return v.booleanValue;
-  if ("integerValue" in v) return Number(v.integerValue);
-  if ("doubleValue" in v) return v.doubleValue;
-  if ("stringValue" in v) return v.stringValue;
-  if ("timestampValue" in v) return v.timestampValue;
-  if ("arrayValue" in v) return ((v.arrayValue as { values?: FsValue[] }).values ?? []).map(dec);
-  if ("mapValue" in v) return decFields((v.mapValue as { fields?: Record<string, FsValue> }).fields ?? {});
+  if ("booleanValue" in v) return v["booleanValue"];
+  if ("integerValue" in v) return Number(v["integerValue"]);
+  if ("doubleValue" in v) return v["doubleValue"];
+  if ("stringValue" in v) return v["stringValue"];
+  if ("timestampValue" in v) return v["timestampValue"];
+  if ("arrayValue" in v) return ((v["arrayValue"] as { values?: FsValue[] }).values ?? []).map(dec);
+  if ("mapValue" in v) return decFields((v["mapValue"] as { fields?: Record<string, FsValue> }).fields ?? {});
   return null;
 }
 const decFields = (f: Record<string, FsValue>) => Object.fromEntries(Object.entries(f).map(([k, x]) => [k, dec(x)]));
@@ -118,8 +118,8 @@ export async function updateDoc(col: string, id: string, data: Record<string, un
 
 export async function listDocs<T>(col: string, opts: { orderBy?: string; limit?: number; where?: [string, unknown] } = {}): Promise<T[]> {
   const structuredQuery: Record<string, unknown> = { from: [{ collectionId: col }], limit: opts.limit ?? 300 };
-  if (opts.orderBy) structuredQuery.orderBy = [{ field: { fieldPath: opts.orderBy }, direction: "DESCENDING" }];
-  if (opts.where) structuredQuery.where = { fieldFilter: { field: { fieldPath: opts.where[0] }, op: "EQUAL", value: enc(opts.where[1]) } };
+  if (opts.orderBy) structuredQuery["orderBy"] = [{ field: { fieldPath: opts.orderBy }, direction: "DESCENDING" }];
+  if (opts.where) structuredQuery["where"] = { fieldFilter: { field: { fieldPath: opts.where[0] }, op: "EQUAL", value: enc(opts.where[1]) } };
   const res = await call(`:runQuery`, { method: "POST", body: JSON.stringify({ structuredQuery }) });
   if (!res.ok) await fail(res, "consulta");
   const rows = (await res.json()) as { document?: RawDoc }[];
